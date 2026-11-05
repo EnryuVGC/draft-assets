@@ -4,7 +4,7 @@ set -e
 series=${1:-naruto}
 cd ${0:A:h}
 RE=~/tools/realesrgan
-nocrop=(0031 0045)   # ids kept at their original aspect ratio (resize only)
+nocrop=(0031 0045 10006)   # ids kept at their original aspect ratio (resize only)
 mkdir -p raw images/$series
 
 for src in raw/*.(png|jpg|jpeg|webp)(N); do
