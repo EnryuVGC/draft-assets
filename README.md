@@ -17,14 +17,18 @@ Every image goes through an AI upscaler before it's added:
 4. Resize to about 800px tall and save as JPG under ~200 KB.
 5. Save to `images/<series>/<id>.jpg`.
 
-## Collectible card art (packs)
+## Collectible cards (packs)
 
-Collectible cards use their own art, separate from the match portraits, so every card feels unique.
+`images/packs/<SET>/<NNN>.jpg` are the **finished collectible cards**, pre-rendered by the bot's card renderer;
+the bot sends them as they are. Card numbers, names and rarities are in the bot repo, `data/collectibles/<set>.json`
+(`images/packs/WOF/012.jpg` is card 12 of Will of Fire).
 
-- `images/packs/<SET>/<NNN>.jpg`: art for card number NNN of a set, 3 digits (`images/packs/WOF/012.jpg` is card `WOF · 012/045`).
-  Card numbers and names are in the bot repo, `data/collectibles/<set>.json`.
-- 750px wide, any shape, JPG under ~300 KB. Nothing is cropped from the sides: tall art (about 5:7) fills the whole card, wider art fills the top of the card and fades into the dark name panel. Portrait images with some space above the head look best.
+Each card is drawn from its own source art when it has some, otherwise from the character's match portrait.
+Source art is kept locally in `raw/packs/<SET>/art/` (ignored by Git, like all of `raw/`).
 
-To add art: put the original in `raw/packs/<SET>/` named by card number (`12.png` or `012.png`), then run
-`./process-pack.sh WOF`. It upscales (same Real-ESRGAN model), resizes to 750px wide and saves to `images/packs/<SET>/`.
-To redo a card, delete its JPG and run the script again.
+To add or replace art: put the original in `raw/packs/<SET>/` named by card number (`12.png` or `012.png`), then run
+`./process-pack.sh WOF`. It AI-upscales the art (same Real-ESRGAN model), resizes it to 750px wide without cropping,
+saves it to `raw/packs/<SET>/art/`, and re-renders all of the set's cards into `images/packs/<SET>/`.
+To redo a card's art, delete `raw/packs/<SET>/art/<NNN>.jpg` and run the script again.
+Portrait images with some space above the head look best: tall art fills the whole card, wider art fills the top and
+fades into the name panel.
