@@ -6,10 +6,13 @@ cd ${0:A:h}
 RE=~/tools/realesrgan
 nocrop=(0031 0045 10006)   # ids kept at their original aspect ratio (resize only)
 mkdir -p raw images/$series
+# only ids that belong to this series (raw/ is shared across series)
+ids=(${(f)"$(python3 -I -c 'import json,sys; [print("%04d" % c["id"]) for c in json.load(open(sys.argv[1]))]' ~/Desktop/Draft/data/$series.json)"})
 
 for src in raw/*.(png|jpg|jpeg|webp)(N); do
   name=${src:t:r}
   [[ $name == <-> ]] || continue
+  (( ${ids[(Ie)$name]} )) || continue
   out=images/$series/$name.jpg
   [[ -f $out ]] && continue
 
