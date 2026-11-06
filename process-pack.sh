@@ -4,6 +4,8 @@
 #    AI-upscaled and resized to 750px wide, never cropped (source art stays local, not committed)
 # 2. renders the set's finished cards into images/packs/<SET>/<NNN>.jpg, which the bot sends as is
 #    (cards without art use the match portrait)
+# 3. if raw/packs/<SET>/pack.png exists (key art on a white background), draws the booster pack
+#    into images/packs/<SET>/pack.jpg
 set -e
 set_code=${1:?usage: ./process-pack.sh <SET CODE>}
 set_code=${set_code:u}
@@ -35,3 +37,7 @@ done
 
 (cd $BOT && go run ./cmd/cards -set $set_code -assets $ROOT -out $ROOT/images/packs/$set_code >/dev/null)
 echo "rendered $cards cards into images/packs/$set_code"
+if [[ -f raw/packs/$set_code/pack.png ]]; then
+  (cd $BOT && go run ./cmd/cards -pack-image $set_code -assets $ROOT -out $ROOT/images/packs/$set_code >/dev/null)
+  echo "drew the booster pack into images/packs/$set_code/pack.jpg"
+fi

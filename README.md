@@ -32,3 +32,7 @@ saves it to `raw/packs/<SET>/art/`, and re-renders all of the set's cards into `
 To redo a card's art, delete `raw/packs/<SET>/art/<NNN>.jpg` and run the script again.
 Portrait images with some space above the head look best: tall art fills the whole card, wider art fills the top and
 fades into the name panel.
+
+**Booster pack picture:** `images/packs/<SET>/pack.jpg`. Put the pack's key art in `raw/packs/<SET>/pack.png`;
+art on a plain white background works best, since the white around the characters is cut out. The pack's foil colours
+are `pack_colors` in the set's JSON. `./process-pack.sh <SET>` draws it along with the cards.
