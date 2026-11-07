@@ -5,7 +5,7 @@ series=${1:-naruto}
 cd ${0:A:h}
 RE=~/tools/realesrgan
 nocrop=(0031 0045 10006)   # ids kept at their original aspect ratio (resize only)
-typeset -A cropx=(10039 0)   # horizontal crop position for off-centre subjects: 0 = left edge, 100 = right edge (default 50)
+typeset -A cropx=(10039 0 0205 30)   # horizontal crop position for off-centre subjects: 0 = left edge, 100 = right edge (default 50)
 mkdir -p raw images/$series
 # only ids that belong to this series (raw/ is shared across series)
 ids=(${(f)"$(python3 -I -c 'import json,sys; [print("%04d" % c["id"]) for c in json.load(open(sys.argv[1]))]' ~/Desktop/Draft/data/$series.json)"})
